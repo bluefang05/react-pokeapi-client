@@ -1,0 +1,20 @@
+.pencil-icon{
+    stroke: midnightblue;
+    color: midnightblue;
+}
+
+.info-icon{
+    stroke: midnightblue;
+    color: midnightblue;
+}
+
+.trash-icon{
+    stroke: darkred;
+    color: darkred;
+}
+
+.icon:hover{
+    transform:  scale(1.5);
+    transition: ease-in-out 0.7s;
+}
+
