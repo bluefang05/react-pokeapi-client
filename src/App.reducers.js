@@ -3,26 +3,26 @@ const superagent = require('superagent');
 
 addReducer(
     "updateTemporaryPokemonDetails", (global, dispatch, action) => {
+        if(action){
+
         
-        console.log(action)
-        console.log("superagent will start with action " + action);
         superagent
             .get("https://pokeapi.co/api/v2/pokemon/" + action + "/")
             .end((err, res) => {
-                let text = res != null && res != undefined ? res.text : "Not Found";
-               
-                if (text != "Not Found") {
-                    console.log(res.body)
-                    global.temporaryPokemonDetails = JSON.parse(res.text);
-                    console.log(global)
-                    setGlobal({ temporaryPokemonDetails : JSON.parse(res.text) })
+                let text = res !== null && res !== undefined ? res.text : "Not Found";
+
+                if (text !== "Not Found") {
+                    setGlobal({ temporaryPokemonDetails: JSON.parse(res.text) })
 
 
                 } else {
-                    setGlobal({ temporaryPokemonDetails : {name: "not found", order : 0}});
-                    console.log(err);
+                    setGlobal({ temporaryPokemonDetails: null });
+
                 }
             });
+        }else{
+            setGlobal({ temporaryPokemonDetails: null });
+        }
     }
 )
 
