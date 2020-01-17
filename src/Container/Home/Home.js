@@ -2,16 +2,17 @@ import React, { useState, useGlobal, useDispatch } from "reactn";
 import { Form, Text } from 'informed';
 import "./css/style.css";
 import Row from "../../Component/Row/Row";
+import ConfirmationCard from "../../Component/ConfirmationCard/ConfirmationCard"
 import Modal from 'react-responsive-modal';
 
 function Home(props) {
 
-
-    const updateLocalStorage = useDispatch("updateLocalStorage");
     const [pokemons, setPokemons] = useGlobal("pokemons");
     const [addRowModalvisibility, setAddRowModalvisibility] = useState(false);
     const [initialized, setInitialized] = useState(false);
     const updateTemporaryPokemonDetails = useDispatch("updateTemporaryPokemonDetails");
+    const [temporaryPokemonDetails, setTemporaryPokemonDetails] = useGlobal("temporaryPokemonDetails");
+    const updateLocalStorage = useDispatch("updateLocalStorage");
 
     let storedPokemons =
         localStorage.getItem("pokemons") != null ? JSON.parse(localStorage.getItem("pokemons")) : [];
@@ -28,7 +29,7 @@ function Home(props) {
 
 
     const addRow = (info) => {
-        
+
         let newArr = Array.from(pokemons);
         newArr.push(info);
         localStorage.setItem('pokemons', JSON.stringify(newArr));
@@ -53,7 +54,7 @@ function Home(props) {
 
     const openAddRowModal = () => {
         console.log(updateTemporaryPokemonDetails());
-        //setAddRowModalvisibility(true);
+        setAddRowModalvisibility(true);
     }
 
     const closeAddRowModal = () => {
@@ -72,6 +73,11 @@ function Home(props) {
             />
         )
     });
+
+    let confirmationCard = temporaryPokemonDetails != null  ? 
+    <ConfirmationCard 
+    name = {temporaryPokemonDetails.name}/> : <div></div>;
+
 
     return (
         <div>
@@ -100,19 +106,16 @@ function Home(props) {
 
                                                 <legend className="uk-legend">Add new row</legend>
 
-                                                <div className="uk-margin">
-                                                    <label className="uk-form-label" htmlFor="form-stacked-text">firstName</label>
-                                                    <Text required={true} field="firstName" className="uk-input" value={props.firstName} type="text" />
-                                                </div>
-                                                <div className="uk-margin">
-                                                    <label className="uk-form-label" htmlFor="form-stacked-text">lastName</label>
-                                                    <Text required={true} field="lastName" className="uk-input" type="text" />
-                                                </div>
-                                                <div className="uk-margin">
-                                                    <label className="uk-form-label" htmlFor="form-stacked-text">date</label>
-                                                    <Text required={true} field="date" className="uk-input" type="date" />
+                                                <div className="uk-margin uk-flex uk-flex-column">
+                                                    <label className="uk-form-label" htmlFor="form-stacked-text">Pokemon's name or number</label>
+                                                    <Text onChange={(e) => { updateTemporaryPokemonDetails(e.target.value) }} required={true} field="firstName" className="uk-input uk-width-small" value={props.firstName} type="text" />
                                                 </div>
 
+                                                <div className="uk-margin uk-flex uk-flex-center" >
+                                                    <button className="uk-button uk-button-primary uk-button-small">Check</button>
+                                                </div>
+
+                                                <ConfirmationCard name={temporaryPokemonDetails.name} />
                                                 <div className="uk-margin uk-flex uk-flex-center" >
                                                     <button type="submit" className="uk-button uk-button-primary uk-button-small">Add</button>
                                                 </div>
@@ -145,6 +148,8 @@ function Home(props) {
         </div>
     )
 }
+
+
 
 
 export default Home;

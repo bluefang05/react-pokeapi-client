@@ -9,7 +9,7 @@ import * as serviceWorker from './serviceWorker';
 React.setGlobal({
     pokemons : [],
     pokemonID : 0,
-    temporaryPokemonDetails : {}
+    temporaryPokemonDetails : {name: "not found", order : 0}
 
 });
 
