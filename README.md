@@ -4,3 +4,7 @@ Realizar un sistema que permita listar pokemons y ver sus detalles (un lista de 
 Listado de pokemons: https://pokeapi.co/api/v2/pokemon
 
 Detalles del pokemon https://pokeapi.co/api/v2/pokemon/<ID DEL POKEMON>
+
+Netlify :
+
+https://pokeapi-client.netlify.com/
