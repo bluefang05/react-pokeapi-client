@@ -156,13 +156,8 @@ function Row(props) {
             <td>{props.firstName}</td>
             <td>{props.lastName}</td>
             <td>{props.date}</td>
-            <td>{props.arrival}</td>
-            <td>{props.phone}</td>
-            <td>{props.email}</td>
-            <td>{props.ssn}</td>
             <td className="uk-flex uk-flex-between">
-                <span onMouseDown={() => { openInfoModal(); }} className="icon info-icon" uk-icon="info"></span>                
-                <span onMouseDown={() => { openEditionModal(); console.log(props); }} className="icon pencil-icon" uk-icon="pencil"></span>
+                <span onMouseDown={() => { openInfoModal(); }} className="icon info-icon" uk-icon="info"></span>
                 <span onMouseDown={() => { confirmDelete(); }} className="icon trash-icon" uk-icon="trash"></span>
             </td>
         </tr>

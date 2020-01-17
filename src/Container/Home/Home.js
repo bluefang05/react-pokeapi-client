@@ -8,69 +8,67 @@ function Home(props) {
 
 
     const updateLocalStorage = useDispatch("updateLocalStorage");
-    const [contacts, setContacts] = useGlobal("contacts");
+    const [pokemons, setPokemons] = useGlobal("pokemons");
     const [addRowModalvisibility, setAddRowModalvisibility] = useState(false);
     const [initialized, setInitialized] = useState(false);
-    let storedContacts =
-        localStorage.getItem("contacts") != null ? JSON.parse(localStorage.getItem("contacts")) : [];
+    const updateTemporaryPokemonDetails = useDispatch("updateTemporaryPokemonDetails");
+
+    let storedPokemons =
+        localStorage.getItem("pokemons") != null ? JSON.parse(localStorage.getItem("pokemons")) : [];
 
 
     if (!initialized) {
 
 
-        setContacts(storedContacts);
+        setPokemons(storedPokemons);
         setInitialized(true);
     }
 
-    let contactRows = [];
+    let pokemonRows = [];
 
 
     const addRow = (info) => {
-        let newArr = Array.from(contacts);
+        
+        let newArr = Array.from(pokemons);
         newArr.push(info);
-        localStorage.setItem('contacts', JSON.stringify(newArr));
-        setContacts(newArr);
+        localStorage.setItem('pokemons', JSON.stringify(newArr));
+        setPokemons(newArr);
         updateLocalStorage();
         closeAddRowModal();
     }
 
     const deleteRow = (index) => {
-        let newRows = [...contacts];
+        let newRows = [...pokemons];
         newRows.splice(index, 1);
-        setContacts(newRows);
+        setPokemons(newRows);
         updateLocalStorage();
     }
 
     const editRow = (index, obj) => {
-        let newRows = [...contacts];
+        let newRows = [...pokemons];
         newRows[index] = obj;
-        setContacts(newRows);
+        setPokemons(newRows);
         updateLocalStorage();
     }
 
     const openAddRowModal = () => {
-
-        setAddRowModalvisibility(true);
+        console.log(updateTemporaryPokemonDetails());
+        //setAddRowModalvisibility(true);
     }
 
     const closeAddRowModal = () => {
         setAddRowModalvisibility(false);
     }
 
-    contacts.forEach((element, index) => {
-        contactRows.push(
+    pokemons.forEach((element, index) => {
+        pokemonRows.push(
             <Row
                 key={"row" + index}
                 index={index}
                 firstName={element.firstName}
                 lastName={element.lastName}
                 date={element.date}
-                arrival={element.arrival}
-                phone={element.phone}
-                email={element.email}
-                ssn={element.ssn}
                 deleteRow={deleteRow}
-                editRow={editRow}
             />
         )
     });
@@ -80,9 +78,9 @@ function Home(props) {
             <div className="content-padder content-background">
                 <div className="uk-section-small uk-section-default header">
                     <div className="uk-container uk-container-large">
-                        <h1><span className="ion-speedometer"></span> Contacts</h1>
+                        <h1><span className="ion-speedometer"></span> Pokemons</h1>
                         <p>
-                            Contacts will be saved in the local storage
+                            Pokemon list will be saved in the local storage
                     </p>
                     </div>
                 </div>
@@ -114,22 +112,7 @@ function Home(props) {
                                                     <label className="uk-form-label" htmlFor="form-stacked-text">date</label>
                                                     <Text required={true} field="date" className="uk-input" type="date" />
                                                 </div>
-                                                <div className="uk-margin">
-                                                    <label className="uk-form-label" htmlFor="form-stacked-text">arrival time</label>
-                                                    <Text required={true} field="arrival" className="uk-input" type="time" />
-                                                </div>
-                                                <div className="uk-margin">
-                                                    <label className="uk-form-label" htmlFor="form-stacked-text">phone</label>
-                                                    <Text required={true} field="phone" className="uk-input" type="text" />
-                                                </div>
-                                                <div className="uk-margin">
-                                                    <label className="uk-form-label" htmlFor="form-stacked-text">email</label>
-                                                    <Text required={true} field="email" className="uk-input" type="text" />
-                                                </div>
-                                                <div className="uk-margin">
-                                                    <label className="uk-form-label" htmlFor="form-stacked-text">SSN</label>
-                                                    <Text required={true} field="ssn" className="uk-input" type="text" />
-                                                </div>
+
                                                 <div className="uk-margin uk-flex uk-flex-center" >
                                                     <button type="submit" className="uk-button uk-button-primary uk-button-small">Add</button>
                                                 </div>
@@ -141,18 +124,14 @@ function Home(props) {
                                         <table className="uk-table uk-table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>FirstName</th>
-                                                    <th>LastName</th>
-                                                    <th>Date</th>
-                                                    <th>Arrival</th>
-                                                    <th>Phone</th>
-                                                    <th>E-mail</th>
-                                                    <th>SSN</th>
+                                                    <th>Number</th>
+                                                    <th>Name</th>
+                                                    <th>type</th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {contactRows}
+                                                {pokemonRows}
 
                                             </tbody>
                                         </table>

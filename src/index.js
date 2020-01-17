@@ -4,8 +4,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+
+
 React.setGlobal({
-    contacts : []
+    pokemons : [],
+    pokemonID : 0,
+    temporaryPokemonDetails : {}
+
 });
 
 
